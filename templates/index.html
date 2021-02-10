@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>Image to Sketch</title>
+</head>
+
+<body>
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Image to Sketch</h1>
+      <p class="lead">Upload gambar untuk mendapatkan efek sketsa</p>
+    </div>
+  </div>
+
+  <form method="POST" action="/" enctype="multipart/form-data" name="myform" onsubmit="return validation()">
+    <div class="container">
+      <div class="row">
+        <div class="form-group col-md-5">
+          <label for="upload-gambar">Upload gambar anda di sini</label>
+          <input type="file" class="form-control" id="upload-gambar" name="gambar" placeholder="Gambar anda">
+          <button type="submit" class="mt-2 btn btn-primary mb-2">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  {% if gambar %}
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col"> 
+            <div class="card rounded rounded mx-auto d-block" style="width: 18rem;">
+              <!-- <img src="..." class="card-img-top img-fluid" alt="..."> -->
+              <img class="card-img-top" src="{{ url_for('static', filename = 'images/before/'+gambar) }}" alt="Gambar anda">
+              <div class="card-body">
+                <h5 class="card-title">Gambar</h5>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card rounded rounded mx-auto d-block" style="width: 18rem;">
+              <img class="card-img-top" src="{{ url_for('static', filename = 'images/after/'+gambar) }}" alt="Gambar anda">
+              <div class="card-body">
+                <h5 class="card-title">Sketsa</h5>
+                <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+  </script>
+  <script>
+
+    function validation(){
+      let img = document.forms['myform']['gambar'];
+      let validExt = ["jpg", "jpeg", "png"];
+
+      if(img.value===''){
+        alert("Silahkan pilih gambar lebih dulu");
+        return false;
+      }
+      else{
+        let ext_gambar = img.value.substring(img.value.lastIndexOf('.')+1);
+        
+        let hasil_ext = validExt.includes(ext_gambar);
+
+        if(hasil_ext===false){
+          alert("Format file tidak didukung");
+          return false;
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
